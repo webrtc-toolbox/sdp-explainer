@@ -1,0 +1,29 @@
+.explainer-container {
+    border: 1px solid #d9d9d9;
+    flex-grow: 1;
+    margin-left: 10px;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.explainer-container p {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.88);
+    line-height: 22px;
+}
+
+.explainer-container a {
+    font-size: 14px;
+}
+
+.explainer-container th {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.88);
+    line-height: 22px;
+}
+
+.explainer-container td {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.88);
+    line-height: 22px;
+}
