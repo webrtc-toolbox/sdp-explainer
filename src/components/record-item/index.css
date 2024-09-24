@@ -1,7 +1,7 @@
-.record-item{
-    cursor:pointer;
+.record-item {
+  cursor: pointer;
 }
 
-.record-item:hover{
-    background-color: rgba(0,0,0,0.2);
+.record-item:hover {
+  background-color: rgba(0, 0, 0, 0.2);
 }
