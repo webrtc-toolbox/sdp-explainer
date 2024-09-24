@@ -9,7 +9,6 @@ import type {
 } from "sdp-parser";
 import "./index.css";
 import { Marked } from "../marked";
-import exp from "node:constants";
 
 interface Props {
   record?: Record;
@@ -138,8 +137,8 @@ function ExplainRTCP() {
 }
 
 function ExplainIcePwd() {
-  return Marked(`
-The "ice-ufrag" and "ice-pwd" attributes convey the username fragment and password used by ICE for message integrity.\n
+  return Marked(`The "ice-ufrag" and "ice-pwd" attributes convey the username
+fragment and password used by ICE for message integrity.
 
 The "ice-pwd" and "ice-ufrag" attributes can appear at either the
 session-level or media-level.  When present in both, the value in the
@@ -152,16 +151,16 @@ they MUST have identical ice-pwd's.`);
 }
 
 function ExplainIceOptions() {
-  return Marked(`
-  **Trickle ICE** is a supplementary mode of ICE
-   operation in which candidates can be exchanged incrementally as soon
-   as they become available (and simultaneously with the gathering of
-   other candidates).  Connectivity checks can also start as soon as
-   candidate pairs have been created.  Because Trickle ICE enables
-   candidate gathering and connectivity checks to be done in parallel,
-   the method can considerably accelerate the process of establishing a
-   communication session.\n
-   [I-D.ietf-ice-trickle](https://datatracker.ietf.org/doc/html/draft-ietf-ice-trickle-21)
+  return Marked(`**Trickle ICE** is a supplementary mode of ICE
+operation in which candidates can be exchanged incrementally as soon
+as they become available (and simultaneously with the gathering of
+other candidates).  Connectivity checks can also start as soon as
+candidate pairs have been created.  Because Trickle ICE enables
+candidate gathering and connectivity checks to be done in parallel,
+the method can considerably accelerate the process of establishing a
+communication session.
+
+[I-D.ietf-ice-trickle](https://datatracker.ietf.org/doc/html/draft-ietf-ice-trickle-21)
   `);
 }
 
