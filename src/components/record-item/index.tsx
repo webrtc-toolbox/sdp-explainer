@@ -1,7 +1,7 @@
 import React from "react";
-import type { Record } from "sdp-parser";
+import type {Record} from "sdp-parser";
 
-import "./index.css";
+import styles from "./index.module.css";
 
 interface Props {
   record: Record;
@@ -13,8 +13,10 @@ export function RecordItem(props: Props) {
     props.onClick(props.record);
   };
 
+  console.log(styles);
+
   return (
-    <li onClick={onClick} className="record-item">
+    <li onClick={onClick} className={styles['record-item']}>
       {props.record.type}={props.record.value}
     </li>
   );

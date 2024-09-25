@@ -1,0 +1,9 @@
+.record-item {
+    cursor: pointer;
+    word-wrap: break-word;
+    margin-bottom: 5px;
+}
+
+.record-item:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
