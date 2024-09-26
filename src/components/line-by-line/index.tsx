@@ -1,10 +1,10 @@
-import React, { ReactNode, useEffect, useState } from "react";
-import { Collapse } from "antd";
-import { Parser, SessionDescription, Record } from "sdp-parser";
-import { RecordItem } from "../record-item";
-import { RecordExplainer } from "../record-explainer";
+import React, {ReactNode, useEffect, useState} from "react";
+import {Collapse} from "antd";
+import {Parser, SessionDescription, Record} from "@webrtc-toolbox/sdp-parser";
+import {RecordItem} from "../record-item";
+import {RecordExplainer} from "../record-explainer";
 
-import type { CollapseProps } from "antd";
+import type {CollapseProps} from "antd";
 
 import "./index.css";
 
@@ -37,6 +37,9 @@ export function LineByLine(props: Props) {
 
   function parseSDPLineByLine(sdp: string): void {
     if (!sdp.trim()) {
+      setSelectedRecord(undefined);
+      setCollapseItems([]);
+      renderRecords([]);
       return;
     }
 
@@ -57,7 +60,6 @@ export function LineByLine(props: Props) {
       collapseKey++;
 
       const records: Record[] = parser.getRecords();
-      console.log(records);
       const sessionRecords: Record[] = [];
 
       let i = 0;
@@ -128,7 +130,7 @@ export function LineByLine(props: Props) {
           items={collapseItems}
         />
       </div>
-      <RecordExplainer record={selectedRecord} sessionDesc={sessionDesc} />
+      <RecordExplainer record={selectedRecord} sessionDesc={sessionDesc}/>
     </div>
   );
 }

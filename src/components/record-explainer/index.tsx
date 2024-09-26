@@ -8,7 +8,7 @@ import type {
   Fmtp,
   SSRC,
   SSRCGroup
-} from "sdp-parser";
+} from "@webrtc-toolbox/sdp-parser";
 import "./index.css";
 import {Marked} from "../marked";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import type {Record} from "sdp-parser";
+import type {Record} from "@webrtc-toolbox/sdp-parser";
 
 import styles from "./index.module.css";
 
