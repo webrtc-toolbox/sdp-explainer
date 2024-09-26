@@ -651,6 +651,18 @@ ${explain}
 `);
 }
 
+function ExplainRid() {
+  return Marked(`The use of **rid** identifiers allows the individual encodings to be disambiguated
+even though they are all part of the same m= section.
+
+**RIDs** can be used to express dependencies between multiple layers of scalable encodings. 
+Adding scalable layers to a session within a multiparty conference
+gives a selective forwarding unit (SFU) further flexibility to
+selectively forward packets from a source that best match the
+bandwidth and capabilities of diverse receivers. [RFC 8851](https://datatracker.ietf.org/doc/html/rfc8851#section-11.2)
+`);
+}
+
 export function RecordExplainer(props: Props) {
   if (!props.record || !props.sessionDesc) {
     return <div></div>;
@@ -752,6 +764,9 @@ export function RecordExplainer(props: Props) {
           }
           case 'ssrc-group': {
             return <ExplainSSRCGroup att={record?.attribute.parsed}/>
+          }
+          case 'rid': {
+            return <ExplainRid/>
           }
         }
         break;
