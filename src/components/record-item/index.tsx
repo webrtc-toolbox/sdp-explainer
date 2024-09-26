@@ -13,8 +13,6 @@ export function RecordItem(props: Props) {
     props.onClick(props.record);
   };
 
-  console.log(styles);
-
   return (
     <li onClick={onClick} className={styles['record-item']}>
       {props.record.type}={props.record.value}

@@ -1,17 +1,34 @@
-import React, {useState} from "react";
-import {Input} from "antd";
-import {Tabs} from "antd";
-import {LineByLine} from "./components/line-by-line";
+import React, { useState } from "react";
+import { Tabs } from "antd";
+import { LineByLine } from "./components/line-by-line";
+import { Header } from "./components/header";
+import { TextArea } from "./components/textarea";
+
 import "./App.css";
 
-const {TextArea} = Input;
+// import { Input } from "antd";
+// const { TextArea } = Input;
 
 function App() {
+  const [textareaInput, setTextareaInput] = useState("");
   const [sdp, setSDP] = useState("");
   const [tabKey, setTabKey] = useState("1");
 
   function onInputChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-    setSDP(e.currentTarget.value);
+    const input = e.currentTarget.value;
+    setTextareaInput(input);
+
+    try {
+      const obj = JSON.parse(input);
+
+      if ("sdp" in obj && typeof obj.sdp === "string") {
+        setTextareaInput(obj.sdp);
+        setSDP(obj.sdp);
+        return;
+      }
+    } catch (e) {}
+
+    setSDP(input);
   }
 
   function onTabChange(key: string) {
@@ -21,17 +38,19 @@ function App() {
   function renderTabContent() {
     switch (tabKey) {
       case "1": {
-        return <LineByLine sdp={sdp}/>;
+        return <LineByLine sdp={sdp} />;
       }
     }
   }
 
   return (
     <div className="App">
+      <Header />
       <div className="content-container">
         <TextArea
+          value={textareaInput}
           className="sdp-textarea"
-          style={{resize: "horizontal"}}
+          // style={{ resize: "horizontal" }}
           onChange={onInputChange}
         ></TextArea>
         <div className="parsed-content">

@@ -3,14 +3,19 @@
   height: 100vh;
   width: 100vw;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
 }
 
 .content-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  height: 100%;
   align-items: flex-start;
+  flex-grow: 1;
+  overflow: scroll;
 }
 
 .sdp-textarea {

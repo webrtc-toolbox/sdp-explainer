@@ -1,10 +1,15 @@
-import React, {ReactNode, useEffect, useState} from "react";
-import {Collapse} from "antd";
-import {Parser, SessionDescription, Record} from "@webrtc-toolbox/sdp-parser";
-import {RecordItem} from "../record-item";
-import {RecordExplainer} from "../record-explainer";
+import React, { ReactNode, useEffect, useState } from "react";
+import { Alert, Collapse } from "antd";
+import {
+  Parser,
+  SessionDescription,
+  Record,
+  Media,
+} from "@webrtc-toolbox/sdp-parser";
+import { RecordItem } from "../record-item";
+import { RecordExplainer } from "../record-explainer";
 
-import type {CollapseProps} from "antd";
+import type { CollapseProps } from "antd";
 
 import "./index.css";
 
@@ -26,6 +31,7 @@ export function LineByLine(props: Props) {
     undefined,
   );
   const [sessionDesc, setSessionDesc] = useState<SessionDescription>();
+  const [errorMsg, setErrorMsg] = useState<string>();
 
   useEffect(() => {
     parseSDPLineByLine(props.sdp);
@@ -35,11 +41,16 @@ export function LineByLine(props: Props) {
     setSelectedRecord(record);
   }
 
+  function reset() {
+    setSelectedRecord(undefined);
+    setCollapseItems([]);
+    renderRecords([]);
+    setErrorMsg("");
+  }
+
   function parseSDPLineByLine(sdp: string): void {
     if (!sdp.trim()) {
-      setSelectedRecord(undefined);
-      setCollapseItems([]);
-      renderRecords([]);
+      reset();
       return;
     }
 
@@ -50,6 +61,7 @@ export function LineByLine(props: Props) {
 
     try {
       const sessionDesc = parser.parse(sdp);
+      setErrorMsg('');
       setSessionDesc(sessionDesc);
 
       const sessionCollapseItem: CollapseItemType = {
@@ -93,6 +105,8 @@ export function LineByLine(props: Props) {
             mediaRecords.push(record);
           }
         }
+        const mediaType = (mediaRecords[0].parsed as Media).mediaType;
+        mediaCollapseItem.label += ` (${mediaType})`;
 
         mediaCollapseItem.children = renderRecords(mediaRecords);
 
@@ -101,6 +115,12 @@ export function LineByLine(props: Props) {
 
       setCollapseItems(newCollapseItems);
     } catch (e) {
+      reset();
+
+      if(e instanceof Error) {
+        setErrorMsg(e.message);
+      }
+
       console.error(e);
     }
   }
@@ -123,14 +143,17 @@ export function LineByLine(props: Props) {
 
   return (
     <div className="linebyline-container">
+      {errorMsg && <Alert message={errorMsg} type="error" showIcon />}
       <div className="collapse-container">
-        <Collapse
-          className="collapse-component"
-          size="small"
-          items={collapseItems}
-        />
+        {collapseItems!.length > 0 && (
+          <Collapse
+            className="collapse-component"
+            size="small"
+            items={collapseItems}
+          />
+        )}
       </div>
-      <RecordExplainer record={selectedRecord} sessionDesc={sessionDesc}/>
+      <RecordExplainer record={selectedRecord} sessionDesc={sessionDesc} />
     </div>
   );
 }
