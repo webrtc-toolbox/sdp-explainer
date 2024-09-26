@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Input } from "antd";
-import { Tabs } from "antd";
-import { LineByLine } from "./components/line-by-line";
+import React, {useState} from "react";
+import {Input} from "antd";
+import {Tabs} from "antd";
+import {LineByLine} from "./components/line-by-line";
 import "./App.css";
 
-const { TextArea } = Input;
+const {TextArea} = Input;
 
 function App() {
   const [sdp, setSDP] = useState("");
@@ -21,7 +21,7 @@ function App() {
   function renderTabContent() {
     switch (tabKey) {
       case "1": {
-        return <LineByLine sdp={sdp} />;
+        return <LineByLine sdp={sdp}/>;
       }
     }
   }
@@ -31,7 +31,7 @@ function App() {
       <div className="content-container">
         <TextArea
           className="sdp-textarea"
-          style={{ resize: "none" }}
+          style={{resize: "horizontal"}}
           onChange={onInputChange}
         ></TextArea>
         <div className="parsed-content">
