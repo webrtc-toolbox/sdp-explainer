@@ -39,6 +39,11 @@
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
     line-height: 20px;
+    flex-grow: 0;
+    white-space: nowrap;
+    /*word-wrap: break-word;*/
+
+    /*white-space: pre;*/
 }
 
 .textinput:focus {

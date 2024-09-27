@@ -7,10 +7,10 @@ import type {
   RTCPFeedback,
   Fmtp,
   SSRC,
-  SSRCGroup
+  SSRCGroup,
 } from "@webrtc-toolbox/sdp-parser";
 import "./index.css";
-import {Marked} from "../marked";
+import { Marked } from "../marked";
 
 interface Props {
   record?: Record;
@@ -20,8 +20,7 @@ interface Props {
 function ExplainVersion() {
   return Marked(`**v=0**\n
 The "v=" field gives the version of the Session Description Protocol.  This memo defines version 0.  There is no minor version number.\n
-[RFC 4566](https://datatracker.ietf.org/doc/html/rfc4566#section-5.1)
-`);
+[RFC 4566](https://datatracker.ietf.org/doc/html/rfc4566#section-5.1)`);
 }
 
 function ExplainOrigin() {
@@ -80,7 +79,7 @@ function ExplainExtMapAllowMixed() {
 function ExplainMedia() {
   return (
     <div>
-      <p style={{fontWeight: 700}}>{`m=<media> <port> <proto> <fmt> ...`}</p>
+      <p style={{ fontWeight: 700 }}>{`m=<media> <port> <proto> <fmt> ...`}</p>
       <p>{`An m= section is generated for each RtpTransceiver that has been added to the PeerConnection, excluding any stopped RtpTransceivers; this is done in the order the RtpTransceivers were added to the PeerConnection. If there are no such RtpTransceivers, no m= sections are generated; more can be added later, as discussed in [RFC3264], Section 5.`}</p>
       <p>{`For each m= section generated for an RtpTransceiver, establish a mapping between the transceiver and the index of the generated m= section.`}</p>
       <p>{`Each m= section, provided it is not marked as bundle-only, MUST generate a unique set of ICE credentials and gather its own unique set of ICE candidates. Bundle-only m= sections MUST NOT contain any ICE credentials and MUST NOT gather any candidates.`}</p>
@@ -118,7 +117,7 @@ function ExplainConnection() {
   return (
     <div>
       <p
-        style={{fontWeight: 700}}
+        style={{ fontWeight: 700 }}
       >{` c=<nettype> <addrtype> <connection-address>`}</p>
       <p>{`The m= line MUST be followed immediately by a "c=" line, as specified in [RFC4566], Section 5.7. Again, as no candidates are available yet, the "c=" line must contain the "dummy" value "IN IP4 0.0.0.0", as defined in [I-D.ietf-ice-trickle], Section 5.1.`}</p>
       <p>{`Each "m=" and c=" line MUST be filled in with the port and address of the default candidate for the m= section, as described in [I-D.ietf-mmusic-ice-sip-sdp], Section 3.2.1.2. Note that in certain cases, the m= line protocol may not match that of the default candidate, because the m= line protocol value MUST match what was supplied in the offer, as described above.`}</p>
@@ -130,7 +129,7 @@ function ExplainRTCP() {
   return (
     <div>
       <p
-        style={{fontWeight: 700}}
+        style={{ fontWeight: 700 }}
       >{`rtcp-attribute = "a=rtcp:" port  [nettype space addrtype space connection-address] CRLF`}</p>
       <p>{`The RTCP attribute is used to document the RTCP port used for media stream, when that port is not the next higher (odd) port number following the RTP port described in the media line.`}</p>
       <p>{``}</p>
@@ -275,17 +274,16 @@ it defines an RTP header extension that can carry RTCP source description (SDES)
 
 [RFC 8852](https://datatracker.ietf.org/doc/rfc8852/)
       `,
-      'urn:ietf:params:rtp-hdrext:ssrc-audio-level': `**urn:ietf:params:rtp-hdrext:ssrc-audio-level** 
+      "urn:ietf:params:rtp-hdrext:ssrc-audio-level": `**urn:ietf:params:rtp-hdrext:ssrc-audio-level** 
 defines a mechanism by which packets of Real-time
- Transport Protocol (RTP) audio streams can indicate, in an RTP header
- extension, the audio level of the audio sample carried in the RTP
- packet.
+Transport Protocol (RTP) audio streams can indicate, in an RTP header
+extension, the audio level of the audio sample carried in the RTP
+packet.
  
- [RFC 6464](https://datatracker.ietf.org/doc/rfc6464/)`,
+[RFC 6464](https://datatracker.ietf.org/doc/rfc6464/)`,
     };
 
-    return Marked(`
-The a=extmap attribute in SDP is used to define a mapping for an RTP header extension,
+    return Marked(`The a=extmap attribute in SDP is used to define a mapping for an RTP header extension,
 which allows the inclusion of additional metadata in RTP packets.\n
 
 ${explainMap[extension]}
@@ -328,12 +326,12 @@ describes an RTP [RFC3550] payload specification applicable to the transmission 
 It is one of the solutions included in WebRTC to recover from audio and video packet loss.
 
 [RFC 5109](https://datatracker.ietf.org/doc/html/rfc5109)`,
-    'flexfec-03': `**FlexFEC** is a Forward Error Correction (FEC) scheme used in WebRTC to enhance the reliability of video streams.
+    "flexfec-03": `**FlexFEC** is a Forward Error Correction (FEC) scheme used in WebRTC to enhance the reliability of video streams.
     
 [RFC 8627](https://datatracker.ietf.org/doc/html/rfc8627)`,
     opus: `The **Opus** format, defined by [RFC 6716](https://datatracker.ietf.org/doc/html/rfc6716) is the primary format for audio in WebRTC.
-The RTP payload format for Opus is found in [RFC 7587](https://datatracker.ietf.org/doc/html/rfc7587).`
-
+The RTP payload format for Opus is found in [RFC 7587](https://datatracker.ietf.org/doc/html/rfc7587).`,
+    "telephone-event": ``,
   };
 
   return Marked(`
@@ -470,52 +468,52 @@ used to generate the stream or that the receiver supports) and
 the default level of the stream or the receiver supports. [RFC 6184](https://datatracker.ietf.org/doc/html/rfc6184#section-8.1)\n`;
     }
 
-    if ('level-idx' in fmtp.parameters) {
+    if ("level-idx" in fmtp.parameters) {
       explain += `\nThe **level-idx** parameter is an integer indicating the highest AV1 level that may have been used to
 generate the bitstream or that the receiver supports. The range of possible values is identical to the seq_level_idx
-syntax element specified in AV1. If the parameter is not present, it MUST be inferred to be 5 (level 3.1).\n`
+syntax element specified in AV1. If the parameter is not present, it MUST be inferred to be 5 (level 3.1).\n`;
     }
 
-    if ('profile' in fmtp.parameters) {
+    if ("profile" in fmtp.parameters) {
       explain += `\nThe **profile** parameter is an integer indicating the highest AV1 profile that may have been used to 
 generate the bitstream or that the receiver supports. The range of possible values is identical to the seq_profile syntax element
 specified in AV1. If the parameter is not present, it MUST be inferred to be 0 (“Main” profile).\n`;
     }
 
-    if ('tier' in fmtp.parameters) {
+    if ("tier" in fmtp.parameters) {
       explain += `\nThe **tier** parameter is an integer indicating the highest tier that may have been used to generate
 the bitstream or that the receiver supports. The range of possible values is identical to the seq_tier syntax element
 specified in AV1. If the parameter is not present, the tier MUST be inferred to be 0.\n`;
     }
 
-    if ('repair-window' in fmtp.parameters) {
+    if ("repair-window" in fmtp.parameters) {
       explain += `\n**repair-window**: The time that spans the source packets and the
 corresponding repair packets.  The size of the repair window is
 specified in microseconds.\n`;
     }
 
-    if ('minptime' in fmtp.parameters) {
+    if ("minptime" in fmtp.parameters) {
       explain += `\n**minptime**: the minimum duration of media represented by a packet
 (according to Section 6 of [RFC4566]) that SHOULD be encapsulated
 in a received packet, in milliseconds rounded up to the next full
 integer value.\n`;
     }
 
-    if ('stereo' in fmtp.parameters) {
+    if ("stereo" in fmtp.parameters) {
       explain += `\n**stereo** specifies whether the decoder prefers receiving stereo or
 mono signals.  Possible values are 1 and 0, where 1 specifies that
 stereo signals are preferred, and 0 specifies that only mono
 signals are preferred.\n`;
     }
 
-    if ('sprop-stereo' in fmtp.parameters) {
+    if ("sprop-stereo" in fmtp.parameters) {
       explain += `\n**sprop-stereo** specifies whether the sender is likely to produce
 stereo audio.  Possible values are 1 and 0, where 1 specifies that
 stereo signals are likely to be sent, and 0 specifies that the
 sender will likely only send mono.\n`;
     }
 
-    if ('useinbandfec' in fmtp.parameters) {
+    if ("useinbandfec" in fmtp.parameters) {
       explain += `\n**useinbandfec**:  specifies that the decoder has the capability to take
 advantage of the Opus in-band FEC.\n`;
     }
@@ -585,28 +583,30 @@ intended for servers running on a public IP address.
 
 **ice-lite** is easy to implement, requiring the media server to only answer incoming STUN binding requests
 and acting as a controlled entity in the ICE process itself. 
-This simplicity makes it quite popular among implementations of SFUs and other media servers.`)
+This simplicity makes it quite popular among implementations of SFUs and other media servers.`);
 }
 
 function ExplainSendOnly() {
-  return Marked(`If the offerer wishes to only send media to its peer, it MUST mark the stream as sendonly.`);
+  return Marked(
+    `If the offerer wishes to only send media to its peer, it MUST mark the stream as sendonly.`,
+  );
 }
 
 function ExplainSSRC(props: { att: any }) {
-  const ssrc = props.att as (SSRC | undefined);
+  const ssrc = props.att as SSRC | undefined;
 
   if (!ssrc) {
     return null;
   }
 
-  let explain = '';
+  let explain = "";
 
-  if ('cname' in ssrc.attributes) {
+  if ("cname" in ssrc.attributes) {
     explain += `\nThe **cname** source attribute associates a media source with its
 Canonical End-Point Identifier (CNAME) source description (SDES) item.\n`;
   }
 
-  if ('msid' in ssrc.attributes) {
+  if ("msid" in ssrc.attributes) {
     explain += `\n**msid** is the same as MediaStream ID in JavaScript.\n`;
   }
 
@@ -617,7 +617,7 @@ SDP, to associate attributes with these sources, and to express
 relationships among sources.
 
 ${explain}
-`)
+`);
 }
 
 function ExplainMsid() {
@@ -630,17 +630,17 @@ in its "appdata" field.\n
 }
 
 function ExplainSSRCGroup(props: { att: any }) {
-  let ssrcGroup = props.att as (SSRCGroup | undefined);
+  let ssrcGroup = props.att as SSRCGroup | undefined;
 
   if (!ssrcGroup) {
     return null;
   }
 
-  let explain = '';
-  if (ssrcGroup.semantic === 'FID') {
-    explain += '**FID** means Flow Identification, which is an RTX repair flow.';
+  let explain = "";
+  if (ssrcGroup.semantic === "FID") {
+    explain +=
+      "**FID** means Flow Identification, which is an RTX repair flow.";
   }
-
 
   return Marked(`**ssrc-group** expresses a relationship among
 several sources of an RTP session.
@@ -663,32 +663,53 @@ bandwidth and capabilities of diverse receivers. [RFC 8851](https://datatracker.
 `);
 }
 
+function ExplainSCTPPort() {
+  return Marked(`**sctp-port** attribute can be associated
+with an SDP media description (m-line) with a 'UDP/DTLS/SCTP' or a 'TCP/DTLS/SCTP' proto value.
+In that case the m- line port value indicates the port of the underlying
+transport layer protocol (UDP or TCP), and the 'sctp-port' value
+indicates the SCTP port.
+
+[RFC 8841](https://datatracker.ietf.org/doc/html/rfc8841)
+`);
+}
+
+function ExplainMaxMessageSize() {
+  return Marked(`**max-message-size** can be associated with an m- line to 
+indicate the maximum SCTP user message size (indicated in bytes) that an SCTP
+endpoint is willing to receive on the SCTP association associated
+with the m- line.
+
+[RFC 8841](https://datatracker.ietf.org/doc/html/rfc8841)
+`);
+}
+
 export function RecordExplainer(props: Props) {
   if (!props.record || !props.sessionDesc) {
     return <div></div>;
   }
 
-  const {record, sessionDesc} = props;
+  const { record, sessionDesc } = props;
 
   function renderExplain() {
     switch (record.type) {
       case "v": {
-        return <ExplainVersion/>;
+        return <ExplainVersion />;
       }
       case "o": {
-        return <ExplainOrigin/>;
+        return <ExplainOrigin />;
       }
       case "s": {
-        return <ExplainSessionName/>;
+        return <ExplainSessionName />;
       }
       case "t": {
-        return <ExplainTiming/>;
+        return <ExplainTiming />;
       }
       case "m": {
-        return <ExplainMedia/>;
+        return <ExplainMedia />;
       }
       case "c": {
-        return <ExplainConnection/>;
+        return <ExplainConnection />;
       }
       case "a": {
         if (!record.attribute) {
@@ -697,76 +718,82 @@ export function RecordExplainer(props: Props) {
 
         switch (record.attribute.attField) {
           case "group": {
-            return <ExplainGroup/>;
+            return <ExplainGroup />;
           }
           case "msid-semantic": {
-            return <ExplainMsidSemantic/>;
+            return <ExplainMsidSemantic />;
           }
           case "extmap-allow-mixed": {
-            return <ExplainExtMapAllowMixed/>;
+            return <ExplainExtMapAllowMixed />;
           }
           case "rtcp": {
-            return <ExplainRTCP/>;
+            return <ExplainRTCP />;
           }
           case "ice-ufrag": {
-            return <ExplainIceUfrag/>;
+            return <ExplainIceUfrag />;
           }
           case "ice-pwd": {
-            return <ExplainIcePwd/>;
+            return <ExplainIcePwd />;
           }
           case "ice-options": {
-            return <ExplainIceOptions/>;
+            return <ExplainIceOptions />;
           }
           case "fingerprint": {
-            return <ExplainFingerrpint/>;
+            return <ExplainFingerrpint />;
           }
           case "setup": {
-            return <ExplainSetup/>;
+            return <ExplainSetup />;
           }
           case "mid": {
-            return <ExplainMid/>;
+            return <ExplainMid />;
           }
           case "extmap": {
-            return <ExplainExtmap att={record?.attribute?.parsed}/>;
+            return <ExplainExtmap att={record?.attribute?.parsed} />;
           }
           case "rtpmap": {
-            return <ExplainRTPMap att={record?.attribute?.parsed}/>;
+            return <ExplainRTPMap att={record?.attribute?.parsed} />;
           }
           case "rtcp-fb": {
-            return <ExplainRTCPFb att={record?.attribute?.parsed}/>;
+            return <ExplainRTCPFb att={record?.attribute?.parsed} />;
           }
           case "fmtp": {
-            return <ExplainFMTP att={record?.attribute?.parsed}/>;
+            return <ExplainFMTP att={record?.attribute?.parsed} />;
           }
           case "recvonly": {
-            return <ExplainRecvOnly/>;
+            return <ExplainRecvOnly />;
           }
           case "rtcp-mux": {
-            return <ExplainRTCPMux/>;
+            return <ExplainRTCPMux />;
           }
           case "rtcp-rsize": {
-            return <ExplainRTCPRsize/>;
+            return <ExplainRTCPRsize />;
           }
           case "candidate": {
-            return <ExplainCandidate/>;
+            return <ExplainCandidate />;
           }
-          case 'ice-lite': {
-            return <ExplainIceLite/>
+          case "ice-lite": {
+            return <ExplainIceLite />;
           }
-          case 'sendonly': {
-            return <ExplainSendOnly/>
+          case "sendonly": {
+            return <ExplainSendOnly />;
           }
-          case 'ssrc': {
-            return <ExplainSSRC att={record.attribute.parsed}/>
+          case "ssrc": {
+            return <ExplainSSRC att={record.attribute.parsed} />;
           }
-          case 'msid': {
-            return <ExplainMsid/>
+          case "msid": {
+            return <ExplainMsid />;
           }
-          case 'ssrc-group': {
-            return <ExplainSSRCGroup att={record?.attribute.parsed}/>
+          case "ssrc-group": {
+            return <ExplainSSRCGroup att={record?.attribute.parsed} />;
           }
-          case 'rid': {
-            return <ExplainRid/>
+          case "rid": {
+            return <ExplainRid />;
+          }
+          case "sctp-port": {
+            return <ExplainSCTPPort />;
+          }
+          case "max-message-size": {
+            return <ExplainMaxMessageSize />;
           }
         }
         break;

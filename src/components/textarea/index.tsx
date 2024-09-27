@@ -21,6 +21,7 @@ export function TextArea(props: Props) {
       return 0;
     }
 
+    debugger;
     const textareaWidth = textarea.current.getBoundingClientRect().width;
     const words = str.split(" ");
     let lineCount = 0;
@@ -65,7 +66,13 @@ export function TextArea(props: Props) {
   };
 
   const displayLineNumbers = () => {
-    const newLineNumbers = calculateLineNumbers();
+    // const newLineNumbers = calculateLineNumbers();
+    const lines = props.value.split("\n");
+    const newLineNumbers = [];
+    for (let i = 0; i < lines.length; i++) {
+      newLineNumbers.push(i + 1);
+    }
+
     setLineNumbers(newLineNumbers);
   };
 

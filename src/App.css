@@ -15,7 +15,7 @@
   justify-content: space-between;
   align-items: flex-start;
   flex-grow: 1;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .sdp-textarea {
