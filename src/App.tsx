@@ -3,11 +3,10 @@ import { Tabs } from "antd";
 import { LineByLine } from "./components/line-by-line";
 import { Header } from "./components/header";
 import { TextArea } from "./components/textarea";
-
+import { JSONView } from "./components/json-view";
+import { OverView } from "./components/overview";
+import { Treemap } from "./components/treemap";
 import "./App.css";
-
-// import { Input } from "antd";
-// const { TextArea } = Input;
 
 function App() {
   const [textareaInput, setTextareaInput] = useState("");
@@ -40,6 +39,15 @@ function App() {
       case "1": {
         return <LineByLine sdp={sdp} />;
       }
+      case "2": {
+        return <Treemap sdp={sdp} />;
+      }
+      case "3": {
+        return <OverView sdp={sdp} />;
+      }
+      case "4": {
+        return <JSONView sdp={sdp} />;
+      }
     }
   }
 
@@ -62,8 +70,19 @@ function App() {
             items={[
               {
                 key: "1",
-                label: "line-by-line",
-                // children: <LineByLine sdp={sdp} />,
+                label: "Line-by-Line",
+              },
+              // {
+              //   key: "2",
+              //   label: "treemap",
+              // },
+              {
+                key: "3",
+                label: "Overview",
+              },
+              {
+                key: "4",
+                label: "JSON",
               },
             ]}
             onChange={onTabChange}

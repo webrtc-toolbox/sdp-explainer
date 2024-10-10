@@ -667,7 +667,7 @@ function ExplainSCTPPort() {
   return Marked(`**sctp-port** attribute can be associated
 with an SDP media description (m-line) with a 'UDP/DTLS/SCTP' or a 'TCP/DTLS/SCTP' proto value.
 In that case the m- line port value indicates the port of the underlying
-transport layer protocol (UDP or TCP), and the 'sctp-port' value
+transport layer protocol (UDP or TCP), and the **sctp-port** value
 indicates the SCTP port.
 
 [RFC 8841](https://datatracker.ietf.org/doc/html/rfc8841)
@@ -682,6 +682,12 @@ with the m- line.
 
 [RFC 8841](https://datatracker.ietf.org/doc/html/rfc8841)
 `);
+}
+
+function ExplainInactive() {
+  return Marked(`If the offerer
+wishes to communicate, but wishes to neither send nor receive media
+at this time, it MUST mark the stream with an **a=inactive** attribute.`);
 }
 
 export function RecordExplainer(props: Props) {
@@ -794,6 +800,9 @@ export function RecordExplainer(props: Props) {
           }
           case "max-message-size": {
             return <ExplainMaxMessageSize />;
+          }
+          case "inactive": {
+            return <ExplainInactive />;
           }
         }
         break;

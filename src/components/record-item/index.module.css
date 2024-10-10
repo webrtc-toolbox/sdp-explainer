@@ -5,5 +5,9 @@
 }
 
 .record-item:hover {
-    background-color: rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+}
+
+.selected {
+    font-weight: bold;
 }

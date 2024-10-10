@@ -131,7 +131,7 @@ export function LineByLine(props: Props) {
         {records.map((record, index) => {
           return (
             <RecordItem
-              key={index}
+              key={record.line}
               record={record}
               onClick={handleRecordClick}
             />

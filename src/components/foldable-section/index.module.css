@@ -1,0 +1,44 @@
+.container {
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+.container:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* .container > *:not(.title) {
+    padding: 15px;
+} */
+
+.title {
+    cursor: pointer;
+    padding: 10px 0;
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.arrow {
+    margin-left: 10px;
+    display: inline-block;
+    transition: transform 0.3s ease;
+    font-size: 12px;
+    color: #666;
+}
+
+.container:hover .arrow {
+    color: #333;
+}
+
+.title[aria-expanded="true"] .arrow {
+    transform: rotate(180deg);
+}
