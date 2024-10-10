@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { parse, SessionDescription } from "@webrtc-toolbox/sdp-parser";
-import ReactJson, { CollapsedFieldProps } from 'react-json-view'
+import ReactJson from 'react-json-view'
 import { Alert } from "antd";
 import styles from "./index.module.css";
 
@@ -18,12 +18,12 @@ export const JSONView = (props: JSONViewProps) => {
         setErrorMsg(undefined);
     }
 
-    function onSelect(select: any) {
-        console.log(select);
-    }
-
     useEffect(() => {
         reset();
+
+        if (!sdp.trim()) {
+            return;
+        }
 
         try {
             const parsed = parse(sdp);
@@ -37,7 +37,7 @@ export const JSONView = (props: JSONViewProps) => {
 
     return <div className={styles["json-view-container"]}>
         {errorMsg && <Alert message={errorMsg} type="error" showIcon />}
-        {!errorMsg && <ReactJson src={sessionDescription || {}} displayDataTypes={false} name="sessionDescription" collapsed={true} onSelect={onSelect} />}
+        {!errorMsg && sessionDescription && <ReactJson src={sessionDescription || {}} displayDataTypes={false} name="sessionDescription" collapsed={true} />}
     </div>;
 };
 

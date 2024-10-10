@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import styles from "./index.module.css";
 import { parse, SessionDescription, MediaDescription, Extmap, PayloadAttribute, RTCPFeedback } from "@webrtc-toolbox/sdp-parser";
 import { FoldableSection } from "../foldable-section";
-import { Table, Tag } from "antd";
+import { Table, Tag, Descriptions, DescriptionsProps } from "antd";
 
-interface RTPPayloadProps {
-    payloads: PayloadAttribute[];
+interface OverviewProps {
+    sdp: string;
 }
 
-function RTPPayload(props: RTPPayloadProps) {
+function RTPPayload(props: { payloads: PayloadAttribute[] }) {
     const [dataSource, setDataSource] = useState<any[]>([]);
 
     useEffect(() => {
@@ -70,11 +70,7 @@ function RTPPayload(props: RTPPayloadProps) {
     </div>
 }
 
-interface HdrExtProps {
-    extmaps: Extmap[];
-}
-
-function HdrExt(props: HdrExtProps) {
+function HdrExt(props: { extmaps: Extmap[] }) {
     const columns = [
         {
             title: "ID",
@@ -102,9 +98,168 @@ function HdrExt(props: HdrExtProps) {
     );
 }
 
-interface OverviewProps {
-    sdp: string;
+function Ice({ mediaDescription }: { mediaDescription: MediaDescription }) {
+    const [descriptionItems, setDescriptionItems] = useState<DescriptionsProps['items']>([]);
+
+    useEffect(() => {
+        const newItems: DescriptionsProps['items'] = [];
+
+        if (mediaDescription.attributes.iceUfrag) {
+            newItems.push({
+                key: 'iceUfrag',
+                label: 'ICE Ufrag',
+                children: mediaDescription.attributes.iceUfrag,
+            });
+        }
+
+        if (mediaDescription.attributes.icePwd) {
+            newItems.push({
+                key: 'icePwd',
+                label: 'ICE Pwd',
+                children: mediaDescription.attributes.icePwd,
+            });
+        }
+
+        if (mediaDescription.attributes.iceOptions) {
+            newItems.push({
+                key: 'iceOptions',
+                label: 'ICE Options',
+                children: mediaDescription.attributes.iceOptions,
+            });
+        }
+
+        if (mediaDescription.attributes.setup) {
+            newItems.push({
+                key: 'setup',
+                label: 'DTLS Setup',
+                children: mediaDescription.attributes.setup,
+            });
+        }
+
+        if (mediaDescription.attributes.fingerprints) {
+            newItems.push({
+                span: 3,
+                key: 'fingerprints',
+                label: 'DTLS Fingerprints',
+                children: mediaDescription.attributes.fingerprints[0].fingerprint,
+            });
+        }
+
+        if (mediaDescription.attributes.candidates.length > 0) {
+            newItems.push({
+                key: 'candidates',
+                label: 'Candidates',
+                span: 3,
+                children: <Table
+                    bordered
+                    dataSource={mediaDescription.attributes.candidates}
+                    columns={columns}
+                    pagination={false}
+                    size="small"
+                    rowKey="id"
+                />,
+            });
+        }
+
+
+        setDescriptionItems(newItems);
+    }, [mediaDescription]);
+
+    const columns = [
+        {
+            title: "Foundation",
+            dataIndex: "foundation",
+            key: "foundation",
+            width: 20,
+        },
+        {
+            title: "Component ID",
+            dataIndex: "componentId",
+            key: "componentId",
+            width: 20,
+        },
+        {
+            title: "Transport",
+            dataIndex: "transport",
+            key: "transport",
+            width: 20,
+        },
+        {
+            title: "Priority",
+            dataIndex: "priority",
+            key: "priority",
+            width: 20,
+        },
+        {
+            title: "Address",
+            dataIndex: "connectionAddress",
+            key: "connectionAddress",
+            width: 20,
+        },
+        {
+            title: "Port",
+            dataIndex: "port",
+            key: "port",
+            width: 20,
+        },
+        {
+            title: "Type",
+            dataIndex: "type",
+            key: "type",
+            width: 20,
+        },
+        // {
+        //     title: "Relevant Address",
+        //     dataIndex: "relAddr",
+        //     key: "relAddr",
+        //     width: 20,
+        // },
+        // {
+        //     title: "Relevant Port",
+        //     dataIndex: "relPort",
+        //     key: "relPort",
+        //     width: 20,
+        // },
+        // {
+        //     title: "Extension",
+        //     dataIndex: "extension",
+        //     key: "extension",
+        //     width: 20,
+        // },
+    ];
+
+
+    return <div>
+        <Descriptions size="small" bordered items={descriptionItems} />
+    </div>
 }
+
+function MediaDesc(props: { mediaDescription: MediaDescription }) {
+    const { mediaDescription } = props;
+
+    const descriptionItems: DescriptionsProps['items'] = [
+        {
+            key: 'mediaType',
+            label: 'Media Type',
+            children: mediaDescription.media.mediaType,
+        },
+        {
+            key: 'mid',
+            label: 'MID',
+            children: mediaDescription.attributes.mid,
+        },
+        {
+            key: 'direction',
+            label: 'Direction',
+            children: mediaDescription.attributes.direction,
+        },
+
+    ];
+
+    return <div>
+        <Descriptions size="small" bordered items={descriptionItems} />
+    </div>
+}   
 
 export const OverView = (props: OverviewProps) => {
     const { sdp } = props;
@@ -127,6 +282,9 @@ export const OverView = (props: OverviewProps) => {
         return sessionDescription.mediaDescriptions.map((mediaDescription: MediaDescription) => {
             return (
                 <FoldableSection title={`Media: ${mediaDescription.media.mediaType}`}>
+                    <MediaDesc mediaDescription={mediaDescription} />
+                    <h4>ICE & DTLS</h4>
+                    <Ice mediaDescription={mediaDescription} />
                     <h4>RTP header extesions</h4>
                     <HdrExt extmaps={mediaDescription.attributes.extmaps} />
                     <h4>RTP payloads</h4>
