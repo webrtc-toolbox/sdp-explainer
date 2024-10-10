@@ -19,12 +19,16 @@
     cursor: pointer;
     padding: 10px 0;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
     color: #333;
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: background-color 0.3s ease;
+}
+
+.children {
+    margin-top: 10px;
 }
 
 .arrow {

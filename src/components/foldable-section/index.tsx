@@ -20,7 +20,9 @@ export const FoldableSection: React.FC<FoldableSectionProps> = ({ title, childre
                 {title}
                 <span className={styles.arrow}>{isOpen ? '▼' : '▶'}</span>
             </div>
-            {isOpen && children}
+            {isOpen && <div className={styles.children}>
+                {children}
+            </div>}
         </div>
     );
 };

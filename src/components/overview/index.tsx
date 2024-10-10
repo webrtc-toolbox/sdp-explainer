@@ -265,7 +265,17 @@ export const OverView = (props: OverviewProps) => {
     const { sdp } = props;
     const [sessionDescription, setSessionDescription] = useState<SessionDescription>();
 
+    function reset() {
+        setSessionDescription(undefined);
+    }   
+
     useEffect(() => {
+        reset();
+
+        if (sdp.trim() === '') {
+            return;
+        }
+
         try {
             const sessionDescription = parse(sdp);
             setSessionDescription(sessionDescription);
@@ -283,11 +293,11 @@ export const OverView = (props: OverviewProps) => {
             return (
                 <FoldableSection title={`Media: ${mediaDescription.media.mediaType}`}>
                     <MediaDesc mediaDescription={mediaDescription} />
-                    <h4>ICE & DTLS</h4>
+                    <div className={styles.sectionTitle}>ICE & DTLS</div>
                     <Ice mediaDescription={mediaDescription} />
-                    <h4>RTP header extesions</h4>
+                    <div className={styles.sectionTitle}>RTP header extesions</div>
                     <HdrExt extmaps={mediaDescription.attributes.extmaps} />
-                    <h4>RTP payloads</h4>
+                    <div className={styles.sectionTitle}>RTP payloads</div>
                     <RTPPayload payloads={mediaDescription.attributes.payloads} />
                 </FoldableSection>
             );
