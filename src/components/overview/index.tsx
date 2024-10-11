@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.css";
-import { parse, SessionDescription, MediaDescription, Extmap, PayloadAttribute, RTCPFeedback } from "@webrtc-toolbox/sdp-parser";
+import { parse, SessionDescription, MediaDescription, Extmap, PayloadAttribute, RTCPFeedback, SSRC } from "@webrtc-toolbox/sdp-parser";
 import { FoldableSection } from "../foldable-section";
 import { Table, Tag, Descriptions, DescriptionsProps } from "antd";
 
@@ -259,7 +259,34 @@ function MediaDesc(props: { mediaDescription: MediaDescription }) {
     return <div>
         <Descriptions size="small" bordered items={descriptionItems} />
     </div>
-}   
+}
+
+function Ssrc(props: { ssrcs: SSRC[] }) {
+    const columns = [
+        {
+            title: "SSRC",
+            dataIndex: "ssrcId",
+            key: "ssrcId",
+        },
+        {
+            title: "Attributes",
+            dataIndex: "attributes",
+            key: "attributes",
+            render: (_: string, ssrc: SSRC) => {
+                return Object.entries(ssrc.attributes).map(([key, value]) => <Tag key={key}>{key}={value}</Tag>)
+            }
+        },
+    ];
+
+    return <Table
+        bordered
+        dataSource={props.ssrcs}
+        columns={columns}
+        pagination={false}
+        size="small"
+        rowKey="id"
+    />
+}
 
 export const OverView = (props: OverviewProps) => {
     const { sdp } = props;
@@ -267,7 +294,7 @@ export const OverView = (props: OverviewProps) => {
 
     function reset() {
         setSessionDescription(undefined);
-    }   
+    }
 
     useEffect(() => {
         reset();
@@ -295,6 +322,10 @@ export const OverView = (props: OverviewProps) => {
                     <MediaDesc mediaDescription={mediaDescription} />
                     <div className={styles.sectionTitle}>ICE & DTLS</div>
                     <Ice mediaDescription={mediaDescription} />
+                    {mediaDescription.attributes.ssrcs.length > 0 && <>
+                        <div className={styles.sectionTitle}>SSRC</div>
+                        <Ssrc ssrcs={mediaDescription.attributes.ssrcs} />
+                    </>}
                     <div className={styles.sectionTitle}>RTP header extesions</div>
                     <HdrExt extmaps={mediaDescription.attributes.extmaps} />
                     <div className={styles.sectionTitle}>RTP payloads</div>

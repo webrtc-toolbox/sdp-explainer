@@ -18,17 +18,37 @@ interface Props {
 }
 
 function ExplainVersion() {
-  return Marked(`**v=0**\n
-The "v=" field gives the version of the Session Description Protocol.  This memo defines version 0.  There is no minor version number.\n
-[RFC 4566](https://datatracker.ietf.org/doc/html/rfc4566#section-5.1)`);
+  return Marked(`
+The **v=** field specifies the version of the Session Description Protocol (SDP) being used. 
+
+- The current version is 0.
+- There is no minor version number.
+
+The version field is always the first line in an SDP description and follows this format:
+
+\`\`\`
+v=0
+\`\`\`
+
+[RFC 4566 Section 5.1](https://datatracker.ietf.org/doc/html/rfc4566#section-5.1)
+  `);
 }
 
 function ExplainOrigin() {
-  return Marked(`**o=&lt;username&gt; &lt;sess-id&gt; &lt;sess-version&gt; &lt;nettype&gt; &lt;addrtype&gt; &lt;unicast-address&gt;**\n
-The "o=" field gives the originator of the session (her username and the address of the user's host) plus a session identifier and version number.\n
-The value of the &lt;username&gt; field SHOULD be "-". The sess-id MUST be representable by a 64-bit signed integer, and the value MUST be less than (2**63)-1. It is RECOMMENDED that the sess-id be constructed by generating a 64-bit quantity with the highest bit set to zero and the remaining 63 bits being cryptographically random. The value of the &lt;nettype&gt; &lt;addrtype&gt; &lt;unicast-address&gt; tuple SHOULD be set to a non-meaningful address, such as IN IP4 0.0.0.0, to prevent leaking a local IP address in this field; this problem is discussed in [I-D.ietf-rtcweb-ip-handling]. As mentioned in [RFC4566], the entire o= line needs to be unique, but selecting a random number for &lt;sess-id&gt; is sufficient to accomplish this.\n
-[RFC 4566](https://datatracker.ietf.org/doc/html/rfc4566#section-5.2) [JSEP Initial Offers](https://rtcweb-wg.github.io/jsep/#rfc.section.5.2.1) [JSEP Subsequent Offers](https://rtcweb-wg.github.io/jsep/#rfc.section.5.2.2)
- `);
+  return Marked(`**o=&lt;username&gt; &lt;sess-id&gt; &lt;sess-version&gt; &lt;nettype&gt; &lt;addrtype&gt; &lt;unicast-address&gt;**
+
+The **o=** field specifies the originator of the session, including a username, session identifier, session version, network type, address type, and unicast address.
+
+Key points:
+- &lt;username&gt; SHOULD be set to "-"
+- &lt;sess-id&gt; MUST be a 64-bit signed integer less than 2^63 - 1
+- It's RECOMMENDED to generate &lt;sess-id&gt; as a 63-bit cryptographically random number with the highest bit set to zero
+- &lt;nettype&gt; &lt;addrtype&gt; &lt;unicast-address&gt; SHOULD be set to a non-meaningful address (e.g., "IN IP4 0.0.0.0") to prevent IP address leakage
+- The entire **o=** line must be unique, but a random &lt;sess-id&gt; is sufficient to ensure this
+
+[RFC 4566 Section 5.2](https://datatracker.ietf.org/doc/html/rfc4566#section-5.2), 
+[JSEP Initial Offers](https://rtcweb-wg.github.io/jsep/#rfc.section.5.2.1)
+  `);
 }
 
 function ExplainSessionName() {

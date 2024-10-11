@@ -27,3 +27,9 @@
   color: rgba(0, 0, 0, 0.88);
   line-height: 22px;
 }
+
+.explainer-container li {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.88);
+  line-height: 22px;
+}
